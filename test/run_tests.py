@@ -36,5 +36,18 @@ class HTMLParserTest(unittest.TestCase):
         links = htmlparser.get_href_from_tags(open('test/test.html').read(), tag_filter)
         self.assertTrue(links == ['test1.com', 'test2.com'])
 
+    # test extraction of attributes
+    def test_get_attr_from_tags(self):
+        tag_filter = {
+            'name': 'div',
+            'attrs': {
+                'id': 'attr_test'
+            },
+            'type': 'name'
+        }
+        attributes = htmlparser.get_attr_from_tags(open('test/test.html').read(), tag_filter)
+        self.assertEqual(attributes, ["div name"])
+
+
 if __name__ == '__main__':
     unittest.main()

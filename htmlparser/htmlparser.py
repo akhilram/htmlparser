@@ -32,3 +32,13 @@ def get_href_from_tags(html_string, tag_filter):
             links.append(a.attrs['href'])
 
     return links
+
+
+# get specific attributes from all the html tags in the html string that satisfy the tag_filter condition
+def get_attr_from_tags(html_string, tag_filter):
+    soup = BeautifulSoup(html_string, 'html.parser')
+    attr = []
+    for element in soup.findAll(name=tag_filter['name'], attrs=tag_filter['attrs']):
+        attr.append(element.attrs[tag_filter['type']])
+
+    return attr
