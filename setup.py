@@ -15,5 +15,6 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Software Development :: Libraries :: Python Modules'
-    ]
+    ],
+    requires=['html2text', 'bs4']
 )
