@@ -48,6 +48,17 @@ class HTMLParserTest(unittest.TestCase):
         attributes = htmlparser.get_attr_from_tags(open('test/test.html').read(), tag_filter)
         self.assertEqual(attributes, ["div name"])
 
+    # test extraction of content list
+    def test_get_content_list_from_tags(self):
+        tag_filter = {
+            'name': 'div',
+            'attrs': {
+                'id': 'list_test'
+            },
+        }
+        content_list = htmlparser.get_content_list_from_tags(open('test/test.html').read(), tag_filter)
+        self.assertEqual(content_list, [['one', 'two', 'three']])
+
 
 if __name__ == '__main__':
     unittest.main()

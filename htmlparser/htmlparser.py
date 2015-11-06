@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import html2text
+from bs4 import Tag
 
 
 # get unformatted text content from all the html tags in the html string that satisfy the tag_filter condition
@@ -42,3 +43,27 @@ def get_attr_from_tags(html_string, tag_filter):
         attr.append(element.attrs[tag_filter['type']])
 
     return attr
+
+
+# get the content of the html tags as lists. Recursively add the content from inner tags
+def get_content_list_from_tags(html_string, tag_filter):
+    soup = BeautifulSoup(html_string, 'html.parser')
+    content_list = []
+    for element in soup.findAll(name=tag_filter['name'], attrs=tag_filter['attrs']):
+        content = []
+        content_list.append(_get_content_from_tag(element, content))
+
+    return content_list
+
+
+def _get_content_from_tag(element, content):
+    children = [child for child in element.contents if isinstance(child, Tag)]
+
+    if len(children) == 0 and element.get_text is not None and element.get_text != '':
+        content.append(element.get_text())
+        return content
+
+    else:
+        for child in children:
+            _get_content_from_tag(child, content)
+        return content
